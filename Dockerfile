@@ -2,8 +2,10 @@ FROM ubuntu:18.04
 
 ENV ETL_PATH /root/etlegacy
 
+ENV Serverpasswort=123
+
 RUN apt-get update -y && apt-get install -y wget
-RUN apt-get install -y vim
+RUN apt-get install -y nano g++-multilib lib32stdc++-7-dev lib32z1-dev libc6-dev-i386
 RUN wget -O etlegacy-v2.76-x86_64.tar.gz https://www.etlegacy.com/workflow-files/dl/7308381d00d9ed80d339435d04b199225ccff66a/lnx32/etlegacy-v2.77.1-316-g7308381-i386.tar.gz \
 && tar -xzf etlegacy-v2.76-x86_64.tar.gz && rm -f etlegacy-v2.76-x86_64.tar.gz \
 && mv etlegacy-v2.76-x86_64 $ETL_PATH
@@ -20,9 +22,11 @@ RUN wget http://$PAK_MIRROR/pak0.pk3 \
 && wget http://$PAK_MIRROR/rocketrace_final2.pk3 \
 && wget http://$PAK_MIRROR/baserace_3.pk3
 
+
 COPY etl_server.cfg /root/etlegacy/etmain/
 
 EXPOSE 27960/udp
 
 WORKDIR $ETL_PATH
-ENTRYPOINT ./etlded_bot.sh
+ENTRYPOINT bash
+#ENTRYPOINT ./etlded_bot.sh
