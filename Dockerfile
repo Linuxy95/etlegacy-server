@@ -4,8 +4,10 @@ ENV ETL_PATH /root/etlegacy
 
 ENV Serverpasswort=123
 
-RUN apt-get update -y && apt-get install -y wget
+RUN apt-get update -y && apt-get install -y wget 
 RUN apt-get install -y nano g++-multilib lib32stdc++-7-dev lib32z1-dev libc6-dev-i386
+RUN apt-get install -y lua5.3 liblua5.3-dev libmariadb-dev lua-sql-mysql default-libmysqlclient-dev gcc gcc+ make openssl liblua5.1-dev lua-any lua-sec unzip zip libssl-dev git luarocks 
+RUN luarocks install luasql-mysql MYSQL_INCDIR=/usr/include/mysql
 RUN wget -O etlegacy-v2.77.1-316-g7308381-i386.tar.gz https://www.etlegacy.com/workflow-files/dl/7308381d00d9ed80d339435d04b199225ccff66a/lnx32/etlegacy-v2.77.1-316-g7308381-i386.tar.gz \
 && tar -xzf etlegacy-v2.77.1-316-g7308381-i386.tar.gz && rm -f etlegacy-v2.77.1-316-g7308381-i386.tar.gz \
 && mv etlegacy-v2.77.1-316-g7308381-i386 $ETL_PATH
