@@ -31,3 +31,4 @@ WORKDIR $ETL_PATH
 ENTRYPOINT top -b
 #ENTRYPOINT /bin/sh
 #ENTRYPOINT ./etlded_bot.sh
+CMD /usr/bin/bash
