@@ -28,5 +28,5 @@ COPY etl_server.cfg /root/etlegacy/etmain/
 EXPOSE 27960/udp
 
 WORKDIR $ETL_PATH
-ENTRYPOINT /bin/sh
+#ENTRYPOINT /bin/sh
 #ENTRYPOINT ./etlded_bot.sh
