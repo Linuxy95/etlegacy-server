@@ -58,4 +58,4 @@ WORKDIR $ETL_PATH/etmain
 EXPOSE 27960/udp
 
 WORKDIR $ETL_PATH
-CMD ["lua"]
+ENTRYPOINT ./etlded_bot.sh
