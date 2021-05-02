@@ -59,3 +59,4 @@ EXPOSE 27960/udp
 
 WORKDIR $ETL_PATH
 ENTRYPOINT ./etlded_bot.sh
+CMD ["lua"]
