@@ -1,5 +1,11 @@
 FROM debian:buster
 
+
+ENV ETL_PATH /root/etlegacy
+
+ENV Serverpasswort=123
+
+RUN apt-get update -y && apt-get install -y wget 
 RUN set -ex \
       && saved_apt_mark="$(apt-mark showmanual)" \
     && apt-get update \
@@ -27,13 +33,6 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/lua /tmp/lua.tar.gz \
     && lua -v
-
-
-ENV ETL_PATH /root/etlegacy
-
-ENV Serverpasswort=123
-
-RUN apt-get update -y && apt-get install -y wget 
 RUN apt-get install -y nano g++-multilib lib32stdc++-7-dev lib32z1-dev libc6-dev-i386
 RUN apt-get install -y lua5.3 liblua5.3-dev libmariadb-dev lua-sql-mysql default-libmysqlclient-dev gcc gcc+ make openssl liblua5.1-dev lua-any lua-sec unzip zip libssl-dev git luarocks 
 RUN luarocks install luasql-mysql MYSQL_INCDIR=/usr/include/mysql
