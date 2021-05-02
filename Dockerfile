@@ -1,4 +1,33 @@
-FROM ubuntu:18.04
+FROM debian:buster
+
+RUN set -ex \
+      && saved_apt_mark="$(apt-mark showmanual)" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      gcc \
+      libc6-dev \
+      make \
+              libreadline-dev \
+                        && curl -fsSL -o /tmp/lua.tar.gz "https://www.lua.org/ftp/lua-5.4.3.tar.gz" \
+  && cd /tmp \
+  
+    && echo "1dda2ef23a9828492b4595c0197766de6e784bc7 *lua.tar.gz" | sha1sum -c - \
+    && mkdir /tmp/lua \
+  && tar -xf /tmp/lua.tar.gz -C /tmp/lua --strip-components=1 \
+  && cd /tmp/lua \
+      && make linux \
+    && make install \
+      && cd / \
+      && apt-mark auto '.*' > /dev/null \
+    && apt-mark manual $saved_apt_mark \
+          && dpkg-query --show --showformat '${package}\n' | grep -P '^libreadline\d+$' | xargs apt-mark manual \
+                  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/lua /tmp/lua.tar.gz \
+    && lua -v
+
 
 ENV ETL_PATH /root/etlegacy
 
@@ -30,5 +59,4 @@ WORKDIR $ETL_PATH/etmain
 EXPOSE 27960/udp
 
 WORKDIR $ETL_PATH
-ENTRYPOINT ./etlded_bot.sh
-CMD /bin/sh
+CMD ["lua"]
